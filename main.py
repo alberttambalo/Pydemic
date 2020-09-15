@@ -1,4 +1,5 @@
 from graphic import Dot
+from graphic import Line
 from random import randint
 import pygame
 pygame.font.init()
@@ -18,7 +19,9 @@ def main():
     clock = pygame.time.Clock()
     Dots = []
     InfectedDots = []
+    Bars = []
     main_font = pygame.font.SysFont("comicsans", 50)
+    time = 0
     def move():
         for d in Dots:
             if d.x > 10 and d.x < 740 and d.y > 10 and d.y < 490 and (d.i != 0 or d.j != 0):
@@ -87,12 +90,19 @@ def main():
     def draw_graph():
         pygame.draw.line(WIN, (255,255,255), (20, 720), (700, 720), 5)
         pygame.draw.line(WIN, (255,255,255), (20,720), (20, 550), 5)
+        if len(InfectedDots) == 0:
+            return
+        newLine = Line(20 + time, 720, 20 + time, (720-(len(InfectedDots) * .5)), 255, 255, 255, 2)
+        Bars.append(newLine)
+        for b in Bars:
+            pygame.draw.line(WIN, (b.r, b.g, b.b), (b.x1,b.y1), (b.x2,b.y2), b.t)
 
 
     while run:
 
         clock.tick(FPS)
-
+        if len(InfectedDots) != 0:
+            time += 1
 
 
         for event in pygame.event.get():
