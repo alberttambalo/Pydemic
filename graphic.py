@@ -8,7 +8,8 @@ class Dot:
         self.y = y
         self.i = i
         self.j = j
-        self.infected = False
+        self.infected = 0
+        self.sick = -1
 
     def setRGB(self, r, g, b):
         self.r = r

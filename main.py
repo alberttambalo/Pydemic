@@ -63,9 +63,10 @@ def main():
         WIN.blit(BLACK_BACKGROUND, (0,0))
         infected_label = main_font.render("Infected: " + str(len(InfectedDots)), 1, (255,255,255))
         total_label = main_font.render("Total: " + str(len(Dots)), 1, (255,255,255))
-        #gr = main_font.render("Total: " + str(len(Dots)), 1, (255, 255, 255))
+        chance_label = main_font.render("COT: " + str(100) + '%', 1, (255, 255, 255))
         WIN.blit(infected_label, (10, 510))
         WIN.blit(total_label, (250,510))
+        WIN.blit(chance_label, (450, 510))
 
     def draw_dots():
         for d in Dots:
@@ -76,23 +77,32 @@ def main():
             return
         else:
             newInfected = []
+            newRecovered = []
             for id in InfectedDots:
-                #print("72")
+                id.sick -= 1
+                if id.sick == 0:
+                    id.sick = -1
+                    id.infected = 2
+                    id.setRGB(0,0,255)
+                    newRecovered.append(id)
                 for d in Dots:
                     #print("74")
                     dist = math.sqrt(((id.x-d.x)**2) + ((id.y-d.y)**2))
-                    if(dist < 10 and d.infected == False):
+                    if(dist < 10 and d.infected == 0):
                         d.setRGB(255,0,0)
-                        d.infected = True
+                        d.infected = 1
+                        d.sick = 300
                         newInfected.append(d)
             for ni in newInfected:
                 InfectedDots.append(ni)
+            for nr in newRecovered:
+                InfectedDots.remove(nr)
 
     def draw_graph():
 
         pygame.draw.line(WIN, (255,255,255), (20, 720), (700, 720), 5)
         pygame.draw.line(WIN, (255,255,255), (20,720), (20, 550), 5)
-        if len(InfectedDots) == 0:
+        if graphx == 0:
             return
         newLine = Line(20 + graphx, 720, 20 + graphx, (720-170*(len(InfectedDots) / len(Dots))), 255, 255, 255, 2)
         if(graphx < 680):
@@ -117,9 +127,10 @@ def main():
                         Dots.append(temp)
                 if event.key == pygame.K_RSHIFT:
                     for d in Dots:
-                        if d.infected == False:
+                        if d.infected == 0:
                             d.setRGB(255,0,0)
-                            d.infected = True
+                            d.infected = 1
+                            d.sick = 300
                             InfectedDots.append(d)
                             break
                 if event.key == pygame.K_c:
