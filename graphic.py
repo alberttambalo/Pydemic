@@ -1,6 +1,6 @@
 
 class Dot:
-    def __init__(self, x, y, r, g, b, i, j, r0):
+    def __init__(self, x, y, r, g, b, i, j, r0, speed, speedsick):
         self.r = r
         self.g = g
         self.b = b
@@ -11,6 +11,8 @@ class Dot:
         self.infected = 0
         self.sick = -1
         self.r0 = r0
+        self.speed = speed
+        self.speedsick = speedsick
 
     def setRGB(self, r, g, b):
         self.r = r
