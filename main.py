@@ -64,19 +64,27 @@ def main():
 
     def spread():
         if len(InfectedDots) == 0:
+            print("0 infected")
             return
-        for sick in InfectedDots:
-            for d in Dots:
-                t1 = d.x
-                t2 = sick.x
-                t3 = d.y
-                t4 = sick.y
-                dist = math.sqrt(((t1-t2)**2) + ((t3-t4)**2))
-                if dist < 10:
-                    infect = d.setRGB(255, 0, 0)
-                    InfectedDots.append(infect)
+        else:
+            print(str(len(InfectedDots)) + " Infected")
+            newInfected = []
+            for id in InfectedDots:
+                #print("72")
+                for d in Dots:
+                    #print("74")
+                    dist = math.sqrt(((id.x-d.x)**2) + ((id.y-d.y)**2))
+                    if(dist < 10 and d.infected == False):
+                        d.setRGB(255,0,0)
+                        d.infected = True
+                        newInfected.append(d)
+            for ni in newInfected:
+                InfectedDots.append(ni)
+
+
 
     while run:
+        
         clock.tick(FPS)
 
 
@@ -86,13 +94,19 @@ def main():
                 run = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    for i in range(0,1):
+                    for i in range(0,100):
                         temp = Dot(randint(0, 1000), randint(0,1000),255,255,255, randint(-2,2), randint(-2,2))
                         Dots.append(temp)
                 if event.key == pygame.K_RSHIFT:
-                    newInf = Dots[randint(0, len(Dots)-1)]
-                    newInf.setRGB(255,0,0)
-                    InfectedDots.append(newInf)
+                    for d in Dots:
+                        if d.infected == False:
+                            d.setRGB(255,0,0)
+                            d.infected = True
+                            InfectedDots.append(d)
+                            break
+                if event.key == pygame.K_c:
+                    Dots = []
+                    InfectedDots = []
         move()
         redraw_window()
         spread()

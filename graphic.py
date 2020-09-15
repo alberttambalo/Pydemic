@@ -8,11 +8,17 @@ class Dot:
         self.y = y
         self.i = i
         self.j = j
+        self.infected = False
 
     def setRGB(self, r, g, b):
         self.r = r
         self.g = g
         self.b = b
+
+    def getX(self):
+        return self.x
+    def getY(self):
+        return self.y
 
 
 
