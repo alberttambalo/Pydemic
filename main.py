@@ -92,7 +92,7 @@ def main():
         pygame.draw.line(WIN, (255,255,255), (20,720), (20, 550), 5)
         if len(InfectedDots) == 0:
             return
-        newLine = Line(20 + time, 720, 20 + time, (720-(len(InfectedDots) * .5)), 255, 255, 255, 2)
+        newLine = Line(20 + time, 720, 20 + time, (720-170*(len(InfectedDots) / len(Dots))), 255, 255, 255, 2)
         Bars.append(newLine)
         for b in Bars:
             pygame.draw.line(WIN, (b.r, b.g, b.b), (b.x1,b.y1), (b.x2,b.y2), b.t)
@@ -123,6 +123,7 @@ def main():
                 if event.key == pygame.K_c:
                     Dots = []
                     InfectedDots = []
+                    Bars = []
         move()
         redraw_window()
         spread()
