@@ -15,13 +15,14 @@ BLACK_BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("assets
 
 def main():
     run = True
-    FPS = 20
+    FPS = 360
     clock = pygame.time.Clock()
     Dots = []
     InfectedDots = []
     Bars = []
     main_font = pygame.font.SysFont("comicsans", 50)
     graphx = 0
+    R0 = 1.9
     def move():
         for d in Dots:
             if d.x > 10 and d.x < 740 and d.y > 10 and d.y < 490 and (d.i != 0 or d.j != 0):
@@ -63,10 +64,10 @@ def main():
         WIN.blit(BLACK_BACKGROUND, (0,0))
         infected_label = main_font.render("Infected: " + str(len(InfectedDots)), 1, (255,255,255))
         total_label = main_font.render("Total: " + str(len(Dots)), 1, (255,255,255))
-        chance_label = main_font.render("COT: " + str(100) + '%', 1, (255, 255, 255))
+        r0_label = main_font.render("R0: " + str(R0), 1, (255, 255, 255))
         WIN.blit(infected_label, (10, 510))
         WIN.blit(total_label, (250,510))
-        WIN.blit(chance_label, (450, 510))
+        WIN.blit(r0_label, (450, 510))
 
     def draw_dots():
         for d in Dots:
@@ -88,7 +89,8 @@ def main():
                 for d in Dots:
                     #print("74")
                     dist = math.sqrt(((id.x-d.x)**2) + ((id.y-d.y)**2))
-                    if(dist < 10 and d.infected == 0):
+                    if(dist < 30 and d.infected == 0 and id.r0-1 >= 0):
+                        id.r0 -= 1
                         d.setRGB(255,0,0)
                         d.infected = 1
                         d.sick = 300
@@ -116,21 +118,20 @@ def main():
         if len(InfectedDots) != 0:
             graphx += 1
 
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     for i in range(0,100):
-                        temp = Dot(randint(0, 740), randint(0,500),255,255,255, randint(-2,2), randint(-2,2))
+                        temp = Dot(randint(0, 740), randint(0,500),255,255,255, randint(-2,2), randint(-2,2), random.uniform(R0-1,R0+1))
                         Dots.append(temp)
                 if event.key == pygame.K_RSHIFT:
                     for d in Dots:
                         if d.infected == 0:
                             d.setRGB(255,0,0)
                             d.infected = 1
-                            d.sick = 300
+                            d.sick = randint(1000,3000)
                             InfectedDots.append(d)
                             break
                 if event.key == pygame.K_c:
