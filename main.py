@@ -22,13 +22,29 @@ def main():
                 d.x += d.i
                 d.y += d.j
             elif d.x <= 10:
-                d.x += 1
+                d.i = randint(0, 2)
+                d.j = randint(-2, 2)
+                d.x += d.i
+                d.y += d.j
+                #print("cl")
             elif d.y <= 10:
-                d.y += 1
+                d.i = randint(-2, 2)
+                d.j = randint(0, 2)
+                d.x += d.i
+                d.y += d.j
+                #print("ct")
             elif d.x >= 740:
-                d.x -= 1
+                d.i = randint(-2, 0)
+                d.j = randint(-2, 2)
+                d.x += d.i
+                d.y += d.j
+                #print("cr")
             elif d.y >= 740:
-                d.y -= 1
+                d.i = randint(-2, 2)
+                d.j = randint(-2, 0)
+                d.x += d.i
+                d.y += d.j
+                #print("cb")
             elif d.i == 0 and d.j == 0:
                 print("ij 0\n")
                 d.i = randint(-2,2)
