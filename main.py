@@ -1,6 +1,7 @@
 from graphic import Dot
 from random import randint
 import pygame
+pygame.font.init()
 import os
 import time
 import random
@@ -13,13 +14,14 @@ BLACK_BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("assets
 
 def main():
     run = True
-    FPS = 120
+    FPS = 20
     clock = pygame.time.Clock()
     Dots = []
     InfectedDots = []
+    main_font = pygame.font.SysFont("comicsans", 50)
     def move():
         for d in Dots:
-            if d.x > 10 and d.x < 740 and d.y > 10 and d.y < 740 and (d.i != 0 or d.j != 0):
+            if d.x > 10 and d.x < 740 and d.y > 10 and d.y < 490 and (d.i != 0 or d.j != 0):
                 #print("moving")
                 d.x += d.i
                 d.y += d.j
@@ -41,7 +43,7 @@ def main():
                 d.x += d.i
                 d.y += d.j
                 #print("cr")
-            elif d.y >= 740:
+            elif d.y >= 490:
                 d.i = randint(-2, 2)
                 d.j = randint(-2, 0)
                 d.x += d.i
@@ -56,7 +58,10 @@ def main():
 
     def redraw_window():
         WIN.blit(BLACK_BACKGROUND, (0,0))
-        #pygame.display.update()
+        infected_label = main_font.render("Infected: " + str(len(InfectedDots)), 1, (255,255,255))
+        total_label = main_font.render("Total: " + str(len(Dots)), 1, (255,255,255))
+        WIN.blit(infected_label, (10, 510))
+        WIN.blit(total_label, (250,510))
 
     def draw_dots():
         for d in Dots:
@@ -64,10 +69,8 @@ def main():
 
     def spread():
         if len(InfectedDots) == 0:
-            print("0 infected")
             return
         else:
-            print(str(len(InfectedDots)) + " Infected")
             newInfected = []
             for id in InfectedDots:
                 #print("72")
@@ -81,10 +84,13 @@ def main():
             for ni in newInfected:
                 InfectedDots.append(ni)
 
+    def draw_graph():
+        pygame.draw.line(WIN, (255,255,255), (20, 720), (700, 720), 5)
+        pygame.draw.line(WIN, (255,255,255), (20,720), (20, 550), 5)
 
 
     while run:
-        
+
         clock.tick(FPS)
 
 
@@ -95,7 +101,7 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     for i in range(0,100):
-                        temp = Dot(randint(0, 1000), randint(0,1000),255,255,255, randint(-2,2), randint(-2,2))
+                        temp = Dot(randint(0, 740), randint(0,500),255,255,255, randint(-2,2), randint(-2,2))
                         Dots.append(temp)
                 if event.key == pygame.K_RSHIFT:
                     for d in Dots:
@@ -111,5 +117,7 @@ def main():
         redraw_window()
         spread()
         draw_dots()
+        draw_graph()
+
         pygame.display.update()
 main()
