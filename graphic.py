@@ -9,5 +9,10 @@ class Dot:
         self.i = i
         self.j = j
 
+    def setRGB(self, r, g, b):
+        self.r = r
+        self.g = g
+        self.b = b
+
 
 
