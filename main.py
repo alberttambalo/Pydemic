@@ -91,6 +91,8 @@ def main():
                     id.infected = 2
                     id.setRGB(0,0,255)
                     id.speed = 5
+                    id.i = randint(-id.speed, id.speed)
+                    id.j = randint(-id.speed, id.speed)
                     newRecovered.append(id)
                 for d in Dots:
                     if d.infected == 1 or d.infected == 2:
@@ -102,7 +104,8 @@ def main():
                         d.infected = 1
                         d.sick = 300
                         d.speed = ss
-                        #d.speedsick = ss
+                        d.i = randint(-d.speed, d.speed)
+                        d.j = randint(-d.speed, d.speed)
                         newInfected.append(d)
             for ni in newInfected:
                 InfectedDots.append(ni)
