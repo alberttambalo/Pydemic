@@ -1,1 +1,1 @@
-# PandemicSim
+# Pydemic
