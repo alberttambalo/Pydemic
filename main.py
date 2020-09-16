@@ -28,7 +28,7 @@ def main():
 
     def move():
         for d in Dots:
-            if d.x > 10 and d.x < 740 and d.y > 10 and d.y < 490 and (d.i != 0 or d.j != 0):
+            if d.x > 10 and d.x < 740 and d.y > 50 and d.y < 490 and (d.i != 0 or d.j != 0):
                 #print("moving")
                 d.x += d.i
                 d.y += d.j
@@ -38,7 +38,7 @@ def main():
                 d.x += d.i
                 d.y += d.j
                 #print("cl")
-            elif d.y <= 10:
+            elif d.y <= 50:
                 d.i = randint(-d.speed, d.speed)
                 d.j = randint(0, d.speed)
                 d.x += d.i
@@ -135,7 +135,7 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     for i in range(0,100):
-                        temp = Dot(randint(0, 740), randint(0,500),255,255,255, randint(-5,5), randint(-5,5), random.uniform(R0-1,R0+1), 5, 1)
+                        temp = Dot(randint(0, 740), randint(50,500),255,255,255, randint(-5,5), randint(-5,5), random.uniform(R0-1,R0+1), 5, 1)
                         Dots.append(temp)
                 if event.key == pygame.K_RSHIFT:
                     for d in Dots:
