@@ -11,7 +11,8 @@ import math
 WIDTH, HEIGHT = 750, 750
 WIN = pygame.display.set_mode((WIDTH,HEIGHT))
 
-BLACK_BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("assets", "blackground.png")), (WIDTH, HEIGHT))
+#BLACK_BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("assets", "blackground.png")), (WIDTH, HEIGHT))
+#BLACK_BACKGROUND = pygame.draw.circle(WIN, (0, 0, 0), (375, 375), 10000, 1000)
 
 def main():
     run = True
@@ -20,7 +21,7 @@ def main():
     Dots = []
     InfectedDots = []
     Bars = []
-    main_font = pygame.font.SysFont("comicsans", 50)
+    main_font = pygame.font.SysFont("Arial", 40)
     graphx = 0
     R0 = 0.0
     Disease = "Healthy"
@@ -64,7 +65,8 @@ def main():
                 d.y += d.j
 
     def redraw_window():
-        WIN.blit(BLACK_BACKGROUND, (0,0))
+        #WIN.blit(BLACK_BACKGROUND, (0,0))
+        WIN.fill((0,0,0))
         infected_label = main_font.render("Infected: " + str(len(InfectedDots)), 1, (255,255,255))
         total_label = main_font.render("Total: " + str(len(Dots)), 1, (255,255,255))
         r0_label = main_font.render("R0: " + str(R0), 1, (255, 255, 255))
